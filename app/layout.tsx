@@ -6,7 +6,7 @@ import Script from 'next/script'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'juicykatrina.com'
+  title: 'chloebliss.com'
   // description: 'Welcome to Katrina Sten OnlyFan Page',
 }
 
