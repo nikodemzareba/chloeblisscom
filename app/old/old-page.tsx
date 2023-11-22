@@ -52,10 +52,10 @@ export default async function Page() {
             </div>
             <div className='ml-4 mr-auto text-left'>
               <h4 className='font-semibold'>
-                Katrina Sten <span className='px-2 py-1 text-sm text-green-500 bg-green-100 rounded-full shadow-green-400'>Online Now</span>
+                Chloe Bliss <span className='px-2 py-1 text-sm text-green-500 bg-green-100 rounded-full shadow-green-400'>Online Now</span>
               </h4>
               <p className='text-gray-500 text-md sm:text-lg'>
-                Personal Fitness Trainer in{' '}
+              Dog Walker in{' '}
                 <span>
                   London{' '}
                   <Image
@@ -100,7 +100,7 @@ export default async function Page() {
                     </>
                   )}
                 </span>
-                <span>{` I'm obsessed with hugs, travel and fitness 💪🏝️❤️.`}</span>
+                <span>{` I'm obsessed with hugs, travel and animals 🐶🏝️❤️.`}</span>
               </p>
             </div>
           </div>
