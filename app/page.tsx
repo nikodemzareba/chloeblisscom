@@ -2,8 +2,7 @@
 import Image from 'next/image'
 import { ip } from './ip'
 import { headers } from 'next/headers'
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper-bundle.min.css';
+import { useEffect, useState } from 'react';
 
 const getData = async () => {
   // This will not work on local host
@@ -12,17 +11,29 @@ const getData = async () => {
   return a
 }
 
-export default async function Page() {
-  const loc = await getData()
+export default function Page() {
+  const [loc, setLoc] = useState(null);
+  const [showCarousel, setShowCarousel] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const locData = await getData();
+      setLoc(locData);
+      setShowCarousel(true);
+    };
+
+    fetchData();
+  }, []);
+
   const until = (() => {
     const date = new Date();
     date.setDate(date.getDate() + 3);
-  
+
     const day = new Intl.DateTimeFormat('en-US', { day: '2-digit' }).format(date);
     const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date);
-  
+
     const formattedDate = `${day} ${month}`;
-  
+
     return formattedDate;
   })();
 
@@ -90,21 +101,23 @@ export default async function Page() {
                         d='M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z'
                         clipRule='evenodd'></path>
                     </svg>{' '}
-                    {`${loc.c} ${loc.i}`}
+                    {loc ? `${loc.c} ${loc.i}` : ''}
                   </span>
                 </div>
                 <p className='text-gray-500 text-md mt-3 sm:my-6 '>
-                  Staying in {`${loc.c} `}
-                  <Image
-                    alt={(loc.f as string).toUpperCase() + ' flag'}
-                    src={`https://flagcdn.com/${(loc.f as string).toLowerCase()}.svg`}
-                    width='24'
-                    height='4'
-                    decoding='async'
-                    data-nimg='1'
-                    className='inline-block object-contain h-4 text-transparent'
-                    loading='lazy'
-                  />{' '}
+                  Staying in {loc ? `${loc.c} ` : ''}
+                  {loc && (
+                    <Image
+                      alt={(loc.f as string).toUpperCase() + ' flag'}
+                      src={`https://flagcdn.com/${(loc.f as string).toLowerCase()}.svg`}
+                      width='24'
+                      height='4'
+                      decoding='async'
+                      data-nimg='1'
+                      className='inline-block object-contain h-4 text-transparent'
+                      loading='lazy'
+                    />
+                  )}
                   until {until}. Send me a message here, I reply to all my DMs ❤️
                 </p>
               </div>
@@ -135,22 +148,24 @@ export default async function Page() {
         </main>
       </div>
       {/* Picture Carousel */}
-      <div className='w-full max-w-lg mt-8'>
-        <Swiper
-          spaceBetween={10}
-          slidesPerView={1}
-          navigation
-          loop
-        >
-          <SwiperSlide>
-            <img src='/image1.jpg' alt='Image 1' />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src='/image2.jpg' alt='Image 2' />
-          </SwiperSlide>
-          {/* Add more SwiperSlide components for additional images */}
-        </Swiper>
-      </div>
+      {showCarousel && (
+        <div className='w-full max-w-lg mt-8'>
+          {typeof window !== 'undefined' && (
+            <React.Fragment>
+              <link rel='stylesheet' href='https://unpkg.com/swiper/swiper-bundle.min.css' />
+              <script src='https://unpkg.com/swiper/swiper-bundle.min.js' />
+            </React.Fragment>
+          )}
+          <div className='swiper-container'>
+            <div className='swiper-wrapper'>
+              <div className='swiper-slide'><img src='/image1.jpg' alt='Image 1' /></div>
+              <div className='swiper-slide'><img src='/image2.jpg' alt='Image 2' /></div>
+              {/* Add more slides for additional images */}
+            </div>
+            <div className='swiper-pagination'></div>
+          </div>
+        </div>
+      )}
     </>
   )
 }
