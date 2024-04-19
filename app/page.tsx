@@ -2,6 +2,8 @@
 import Image from 'next/image'
 import { ip } from './ip'
 import { headers } from 'next/headers'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper-bundle.min.css';
 
 const getData = async () => {
   // This will not work on local host
@@ -131,6 +133,23 @@ export default async function Page() {
             </div>
           </section>
         </main>
+      </div>
+      {/* Picture Carousel */}
+      <div className='w-full max-w-lg mt-8'>
+        <Swiper
+          spaceBetween={10}
+          slidesPerView={1}
+          navigation
+          loop
+        >
+          <SwiperSlide>
+            <img src='/image1.jpg' alt='Image 1' />
+          </SwiperSlide>
+          <SwiperSlide>
+            <img src='/image2.jpg' alt='Image 2' />
+          </SwiperSlide>
+          {/* Add more SwiperSlide components for additional images */}
+        </Swiper>
       </div>
     </>
   )
