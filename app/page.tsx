@@ -16,7 +16,7 @@ export default async function Page() {
     const date = new Date()
     date.setDate(date.getDate() + 3)
 
-    const formattedDate = new Intl.DateTimeFormat('en-US', { day: '2-digit', month: 'short' }).format(date)
+    const formattedDate = new Intl.DateTimeFormat('en-US', { month: 'short', day: '2-digit' }).format(date)
 
     return formattedDate
   })()
