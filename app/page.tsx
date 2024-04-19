@@ -13,13 +13,16 @@ const getData = async () => {
 export default async function Page() {
   const loc = await getData()
   const until = (() => {
-    const date = new Date()
-    date.setDate(date.getDate() + 3)
+  const date = new Date();
+  date.setDate(date.getDate() + 3);
 
-    const formattedDate = new Intl.DateTimeFormat('en-US', { day: '2-digit', month: 'short' }).format(date)
+  const day = new Intl.DateTimeFormat('en-US', { day: '2-digit' }).format(date);
+  const month = new Intl.DateTimeFormat('en-US', { month: 'short' }).format(date);
 
-    return formattedDate
-  })()
+  const formattedDate = `${day} ${month}`;
+
+  return formattedDate;
+})();
 
   return (
     <>
